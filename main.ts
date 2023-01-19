@@ -1,7 +1,13 @@
+// Created by: Adam De Rango
+// Created on: January 16 2023
+// 
+// This block of code is for when you press the B button.
+// When you press the B button you set the gloves position to X44 Y90, in additon to this there is a 25% chance that the ball that you are trying to  save will go to x44 Y90.
+// There is also a 75 percent chance that the ball will go to the coordinates of X116 Y90. If the ball sprite overlaps with the glove sprite you get one score. when you get one score the first splash command omes up and says "you guessed corectly" the second ones says "heres one score" then it pauses for 200 ms. if the ball sprite did not overlap with the gloves sprite the first spalsh command will come up and say "you did not guess correctly" the second one says "you get nothing". Finally the ball and the gloves both reset to their original position which are in the start block.
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     gloves.setPosition(44, 90)
     if (controller.B.isPressed()) {
-        if (Math.percentChance(50)) {
+        if (Math.percentChance(25)) {
             ball.setPosition(44, 90)
         } else {
             ball.setPosition(116, 90)
@@ -10,7 +16,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             game.splash("you guessed correctly")
             game.splash("heres one score")
             info.changeScoreBy(1)
-            pause(1000)
+            pause(200)
         } else {
             game.splash("you did not guess correctly")
             game.splash("you get nothing")
@@ -18,12 +24,18 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     }
     ball.setPosition(81, 60)
     gloves.setPosition(80, 90)
-    pause(1000)
+    pause(200)
 })
+// Created by: Adam De Rango
+// Created on: January 16 2023
+// 
+// This block of code is for when you press the A button.
+// When you press the A button you set the gloves position t0 X116 Y90, in additon to this there is a 25% chance that the ball that you are trying to  save will go to x116 Y90.
+// There is also a 75 percent chance that the ball will go to the coordinates of X44 Y90. If the ball sprite overlaps with the glove sprite you get one score. when you get one score the first splash command omes up and says "you guessed corectly" the second ones says "heres one score" then it pauses for 200 ms. if the ball sprite did not overlap with the gloves sprite the first spalsh command will come up and say "you did not guess correctly" the second one says "you get nothing". Finally the ball and the gloves both reset to their original position which are in the start block.
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     gloves.setPosition(116, 90)
     if (controller.A.isPressed()) {
-        if (Math.percentChance(50)) {
+        if (Math.percentChance(25)) {
             ball.setPosition(116, 90)
         } else {
             ball.setPosition(44, 90)
@@ -32,7 +44,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             game.splash("you guessed correctly")
             game.splash("heres one score")
             info.changeScoreBy(1)
-            pause(1000)
+            pause(200)
         } else {
             game.splash("you did not guess correctly")
             game.splash("you get nothing")
@@ -40,8 +52,55 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
     ball.setPosition(81, 60)
     gloves.setPosition(80, 90)
-    pause(1000)
+    pause(200)
 })
+// Created by: Adam De Rango
+// Created on: January 19 2023
+// 
+// This block of code is only for when the coundown in the on start startblock ends. If you have any score a splash block will will pop up and say "your score is" and then will assign you a grade based on what your high score is ranginf from D- to A+.
+// 
+// If you do not have any score a series of three splash blocks the first splash it will read "How is it even possible' the second one will read "you didnt even save one" the third one reads "you fail"
+// 
+// The game then pauses for 5 seconds and it resets so you can play again
+info.onCountdownEnd(function () {
+    if (info.highScore() < 12) {
+        game.splash("Your grade is A+")
+    } else if (info.highScore() < 11) {
+        game.splash("Your grade is A")
+    } else if (info.highScore() < 10) {
+        game.splash("Your grade is A-")
+    } else if (info.highScore() < 9) {
+        game.splash("Your grade is B+")
+    } else if (info.highScore() < 8) {
+        game.splash("Your grade is B")
+    } else if (info.highScore() < 7) {
+        game.splash("Your grade is B-")
+    } else if (info.highScore() < 6) {
+        game.splash("Your grade is C+")
+    } else if (info.highScore() < 5) {
+        game.splash("Your grade is C")
+    } else if (info.highScore() < 4) {
+        game.splash("Your grade is C-")
+    } else if (info.highScore() < 3) {
+        game.splash("Your grade is D+")
+    } else if (info.highScore() < 2) {
+        game.splash("Your grade is D")
+    } else if (info.highScore() < 1) {
+        game.splash("Your grade is D-")
+    } else {
+        game.splash("how is it even possible")
+        game.splash("you didnt even save one")
+        game.splash("you fail")
+    }
+    pause(5000)
+    game.reset()
+})
+// Created by: Adam de Rango
+// Created on: January 16 2023
+// 
+// This is soccer penalty shoot out game, like soccer the goalie has aound a 25% chance of saving the penalty. The goal of his game is to save as many shots as yo can in 20 seconds thats are given o you on the countdown, the highe your score the higher grade you will receive.
+// 
+// This block of block code sets the basic parameters for the game it set the background of the game, the two sprites that are used, the one you cntol and the ne that you dont control, it also set the starting coodinates of the two sprites. 
 let gloves: Sprite = null
 let ball: Sprite = null
 scene.setBackgroundImage(img`
@@ -204,3 +263,5 @@ gloves = sprites.create(img`
     `, SpriteKind.Player)
 ball.setPosition(81, 60)
 gloves.setPosition(80, 90)
+game.splash("Try and save the most balls you can in 20 seconds")
+info.startCountdown(20)
